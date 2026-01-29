@@ -1,6 +1,6 @@
 # AutoGLM SageMaker 部署
 
-将 [AutoGLM-Phone-9B](https://huggingface.co/zai-org/AutoGLM-Phone-9B) 视觉语言模型部署到 Amazon SageMaker Endpoint。
+将 AutoGLM 视觉语言模型部署到 Amazon SageMaker Endpoint。
 
 ## 支持的模型
 
