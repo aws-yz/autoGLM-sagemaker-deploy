@@ -5,15 +5,32 @@ import json
 from huggingface_hub import snapshot_download
 from datetime import datetime
 
-MODEL_ID = "zai-org/AutoGLM-Phone-9B"
+MODELS = {
+    "1": ("zai-org/AutoGLM-Phone-9B", "中文版 - 针对中文手机应用优化"),
+    "2": ("zai-org/AutoGLM-Phone-9B-Multilingual", "多语言版 - 支持英文等多语言场景"),
+}
 LOCAL_DIR = "model"
 
 def main():
-    print(f"下载模型: {MODEL_ID}")
+    print("请选择要下载的模型:")
+    for k, (mid, desc) in MODELS.items():
+        print(f"  {k}. {desc}\n     {mid}")
+    print("  3. 退出")
+    
+    choice = input("\n请输入选项 (1/2/3): ").strip()
+    if choice == "3":
+        print("已退出")
+        return
+    if choice not in MODELS:
+        print("无效选项")
+        return
+    
+    model_id, desc = MODELS[choice]
+    print(f"\n下载模型: {model_id}")
     print(f"目标目录: {LOCAL_DIR}")
     
     snapshot_download(
-        repo_id=MODEL_ID,
+        repo_id=model_id,
         local_dir=LOCAL_DIR,
         local_dir_use_symlinks=False
     )
@@ -27,7 +44,7 @@ def main():
     
     info = {
         "status": "completed",
-        "model_id": MODEL_ID,
+        "model_id": model_id,
         "model_size_gb": total_size / 1024**3,
         "download_time": datetime.now().isoformat()
     }
