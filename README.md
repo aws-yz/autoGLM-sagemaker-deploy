@@ -1,6 +1,13 @@
-# AutoGLM-Phone-9B SageMaker 部署
+# AutoGLM SageMaker 部署
 
 将 [AutoGLM-Phone-9B](https://huggingface.co/zai-org/AutoGLM-Phone-9B) 视觉语言模型部署到 Amazon SageMaker Endpoint。
+
+## 支持的模型
+
+| 模型 | 说明 |
+|-----|------|
+| [AutoGLM-Phone-9B](https://huggingface.co/zai-org/AutoGLM-Phone-9B) | 中文版 - 针对中文手机应用优化 |
+| [AutoGLM-Phone-9B-Multilingual](https://huggingface.co/zai-org/AutoGLM-Phone-9B-Multilingual) | 多语言版 - 支持英文等多语言场景 |
 
 ## 前置条件
 
@@ -57,7 +64,7 @@ rm trust-policy.json
 # 1. 构建容器镜像并推送到 ECR
 ./0_build_and_push.sh
 
-# 2. 下载模型（约 19GB）
+# 2. 下载模型（约 19GB，可选择中文版或多语言版）
 python 1_download_model.py
 
 # 3. 上传模型到 S3（未压缩方式，加速部署）
@@ -107,7 +114,7 @@ print(json.loads(response['Body'].read()))
 | 文件 | 说明 |
 |-----|------|
 | `0_build_and_push.sh` | 构建并推送 Docker 镜像到 ECR |
-| `1_download_model.py` | 从 HuggingFace 下载模型 |
+| `1_download_model.py` | 从 HuggingFace 下载模型（支持选择中文版或多语言版） |
 | `2_upload_model.py` | 上传未压缩模型到 S3 |
 | `3_deploy.py` | 部署 SageMaker Endpoint |
 | `Dockerfile` | 容器定义 |
